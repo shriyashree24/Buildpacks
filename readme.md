@@ -28,6 +28,24 @@ Here's an overview of how Cloud Native Buildpacks work:
 - Packaging: The buildpacks package the application and its dependencies into an OCI-compliant container image. This image can then be deployed to platforms like Kubernetes or Docker.
 
 #
+
+#### Detailed Breakdown of Cloud Native Buildpacks:
+1. Key Concepts and Components
+- Buildpacks: These are modular scripts responsible for transforming code into container images. Each buildpack handles specific tasks like setting up runtime environments, configuring build tools, or installing dependencies.
+- Lifecycle Phases: The lifecycle of CNBs involves distinct phases like detection, analysis, building, exporting, and caching, ensuring efficiency and incremental builds:
+Detection: Buildpacks analyze your app to determine the required buildpacks based on the language or framework.
+- Build: The necessary buildpacks are run, typically downloading dependencies (e.g., for Java, Node.js), configuring the environment, and preparing your app for execution.
+- Export: After the build, the container image is created and optimized, following OCI (Open Container Initiative) standards.
+- Stacks: These are pre-built layers that buildpacks use as a base, which typically includes the OS, libraries, and utilities necessary to run applications. Stacks allow applications to run on standardized environments.
+- Builders: A combination of stacks and buildpacks, bundled to create the actual container image. They provide a base environment for different languages.
+2. Cloud Native Buildpack Lifecycle
+- Detection Phase: Buildpacks inspect your app to determine the suitable language runtime and dependencies. If a language is detected, the corresponding buildpacks are selected (e.g., Node.js buildpacks for JavaScript apps).
+- Build Phase: Buildpacks compile and configure your app, installing dependencies, configuring environment variables, and preparing a production-ready version of your application.
+- Layering & Reusability: Buildpacks create layers for each component of the build (runtime, dependencies, application code). This layered approach ensures that changes in one layer (e.g., app code) don’t require rebuilding all layers (like the runtime). This speeds up incremental builds.
+- Caching: CNBs automatically handle caching dependencies and build artifacts, reducing build times by reusing previous layers where possible
+
+#
+
 ### Deploy your application using Cloud Native Builpacks
 
 #### Pre-requisites:
