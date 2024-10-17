@@ -20,13 +20,20 @@
 - Image contains only what is necessary.
 - Leverage production-ready buildpacks maintained by the community.
 
+#### Working :
+Here's an overview of how Cloud Native Buildpacks work:
+
+- Detection: Buildpacks first detect the language and framework of the application based on the provided source code. They determine which buildpacks are needed, e.g., for Node.js, Java, Python, etc.
+- Building: Once the appropriate buildpacks are chosen, they are used to assemble the container image. This involves installing necessary dependencies, configuring the application environment, and optimizing the image for performance and security.
+- Packaging: The buildpacks package the application and its dependencies into an OCI-compliant container image. This image can then be deployed to platforms like Kubernetes or Docker.
+
 #
-### Deploy NodeJS application using Cloud Native Builpacks
+### Deploy your application using Cloud Native Builpacks
 
 #### Pre-requisites:
 
 - AWS account
-- An Ubuntu EC2 machine t2.micro (t2.micro is ok, if you are using simple application)
+- An Ubuntu EC2 machine 
 - Docker installed
 
 #
@@ -55,32 +62,20 @@ sudo apt-get install pack-cli
 #
 - Clone your code
 ```bash
-git clone https://github.com/DevMadhup/node-todo-cicd.git
+git clone https:<your code>.git
 ```
 #
-- Go inside the directory
-```bash
-cd node-todo-cicd
-```
-#
-- Remove Dockerfile and docker-compose file to make sure we are not using it for building the image.
-```bash
-rm -rv Dockerfile
-rm -rv docker-compose.yaml
-```
+
 #
 - Run the following command to get the pack builder
 ```bash
 pack build suggest
 ```
 #
-- Copy the google builder and paste in the below command
+- Copy the suggested google builder and paste in the below command
 ```bash
-pack build --builder=<your-builder-from-above-command> node-app
+pack build --builder=<your-builder-from-above-command> <your image name>
 ```
-<img width="894" alt="image" src="https://github.com/user-attachments/assets/33e00d6d-0a98-4e16-9783-e07b7a155459">
-> [!Note]
-> This build will take some time be patient.
 
 #
 - After build, check images
@@ -90,14 +85,6 @@ docker images
 #
 - Run the image as a container
 ```bash
-docker run -itd --name nodeapp -p 8000:8000 node-app
+docker run -itd --name nodeapp -p <map the respective port> <image name>
 ```
-> [!Note]
-> This application runs on port 8000, that's why we mentioned 8000 in the above command
-#
-- Open port 8000 from the security groups and access your application
-```bash
-http://<public-ip>:8000
-```
-#
-Congratulations!!! you have deployed and application using Cloud Native Buildpacks.
+ you have deployed and application using Cloud Native Buildpacks.
